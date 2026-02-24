@@ -4,12 +4,12 @@ Meta-project for the AI agent tooling ecosystem. This repo tracks cross-cutting 
 
 ## Ecosystem Overview
 
-| Tool | CLI | Purpose | Sub-repo |
-|------|-----|---------|----------|
-| **Mulch** | `mulch` | Structured expertise management | `mulch/` |
-| **Seeds** | `sd` | Git-native issue tracking | `seeds/` |
-| **Canopy** | `cn` | Prompt management & composition | `canopy/` |
-| **Overstory** | `overstory` | Multi-agent orchestration | `overstory/` |
+| Tool | CLI | npm | Purpose | Sub-repo |
+|------|-----|-----|---------|----------|
+| **Mulch** | `mulch` / `ml` | `@os-eco/mulch-cli` | Structured expertise management | `mulch/` |
+| **Seeds** | `sd` | `@os-eco/seeds-cli` | Git-native issue tracking | `seeds/` |
+| **Canopy** | `cn` | `@os-eco/canopy-cli` | Prompt management & composition | `canopy/` |
+| **Overstory** | `overstory` / `ov` | `@os-eco/overstory-cli` | Multi-agent orchestration | `overstory/` |
 
 ### Relationship Graph
 
@@ -37,19 +37,19 @@ The root `.mulch/`, `.seeds/`, `.canopy/`, and `.overstory/` directories are for
 
 ## Build & Test Commands
 
-Each tool uses Bun or Node. Run from the respective sub-repo:
+All tools use Bun. Run from the respective sub-repo:
 
 ```bash
-# Mulch (Node/npm)
-cd mulch && npm run build && npm test
+# Mulch
+cd mulch && bun test && bun run lint && bun run typecheck
 
-# Seeds (Bun)
+# Seeds
 cd seeds && bun test && bun run lint && bun run typecheck
 
-# Canopy (Bun)
+# Canopy
 cd canopy && bun test && bun run lint && bun run typecheck
 
-# Overstory (Bun)
+# Overstory
 cd overstory && bun test && bun run lint && bun run typecheck
 ```
 

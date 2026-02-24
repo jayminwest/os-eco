@@ -53,8 +53,8 @@ cd overstory && bun link
 Verify:
 
 ```bash
-mulch status
+ml status
 sd list
 cn list
-overstory status
+ov status
 ```
