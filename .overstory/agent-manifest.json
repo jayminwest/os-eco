@@ -1,0 +1,207 @@
+{
+	"version": "1.0",
+	"agents": {
+		"scout": {
+			"file": "scout.md",
+			"model": "haiku",
+			"tools": [
+				"Read",
+				"Glob",
+				"Grep",
+				"Bash"
+			],
+			"capabilities": [
+				"explore",
+				"research"
+			],
+			"canSpawn": false,
+			"constraints": [
+				"read-only"
+			]
+		},
+		"builder": {
+			"file": "builder.md",
+			"model": "sonnet",
+			"tools": [
+				"Read",
+				"Write",
+				"Edit",
+				"Glob",
+				"Grep",
+				"Bash"
+			],
+			"capabilities": [
+				"implement",
+				"refactor",
+				"fix"
+			],
+			"canSpawn": false,
+			"constraints": []
+		},
+		"reviewer": {
+			"file": "reviewer.md",
+			"model": "sonnet",
+			"tools": [
+				"Read",
+				"Glob",
+				"Grep",
+				"Bash"
+			],
+			"capabilities": [
+				"review",
+				"validate"
+			],
+			"canSpawn": false,
+			"constraints": [
+				"read-only"
+			]
+		},
+		"lead": {
+			"file": "lead.md",
+			"model": "opus",
+			"tools": [
+				"Read",
+				"Write",
+				"Edit",
+				"Glob",
+				"Grep",
+				"Bash",
+				"Task"
+			],
+			"capabilities": [
+				"coordinate",
+				"implement",
+				"review"
+			],
+			"canSpawn": true,
+			"constraints": []
+		},
+		"merger": {
+			"file": "merger.md",
+			"model": "sonnet",
+			"tools": [
+				"Read",
+				"Write",
+				"Edit",
+				"Glob",
+				"Grep",
+				"Bash"
+			],
+			"capabilities": [
+				"merge",
+				"resolve-conflicts"
+			],
+			"canSpawn": false,
+			"constraints": []
+		},
+		"coordinator": {
+			"file": "coordinator.md",
+			"model": "opus",
+			"tools": [
+				"Read",
+				"Glob",
+				"Grep",
+				"Bash"
+			],
+			"capabilities": [
+				"coordinate",
+				"dispatch",
+				"escalate"
+			],
+			"canSpawn": true,
+			"constraints": [
+				"read-only",
+				"no-worktree"
+			]
+		},
+		"supervisor": {
+			"file": "supervisor.md",
+			"model": "opus",
+			"tools": [
+				"Read",
+				"Write",
+				"Edit",
+				"Glob",
+				"Grep",
+				"Bash",
+				"Task"
+			],
+			"capabilities": [
+				"coordinate",
+				"supervise"
+			],
+			"canSpawn": true,
+			"constraints": []
+		},
+		"monitor": {
+			"file": "monitor.md",
+			"model": "sonnet",
+			"tools": [
+				"Read",
+				"Glob",
+				"Grep",
+				"Bash"
+			],
+			"capabilities": [
+				"monitor",
+				"patrol"
+			],
+			"canSpawn": false,
+			"constraints": [
+				"read-only",
+				"no-worktree"
+			]
+		}
+	},
+	"capabilityIndex": {
+		"explore": [
+			"scout"
+		],
+		"research": [
+			"scout"
+		],
+		"implement": [
+			"builder",
+			"lead"
+		],
+		"refactor": [
+			"builder"
+		],
+		"fix": [
+			"builder"
+		],
+		"review": [
+			"reviewer",
+			"lead"
+		],
+		"validate": [
+			"reviewer"
+		],
+		"coordinate": [
+			"lead",
+			"coordinator",
+			"supervisor"
+		],
+		"merge": [
+			"merger"
+		],
+		"resolve-conflicts": [
+			"merger"
+		],
+		"dispatch": [
+			"coordinator"
+		],
+		"escalate": [
+			"coordinator"
+		],
+		"supervise": [
+			"supervisor"
+		],
+		"monitor": [
+			"monitor"
+		],
+		"patrol": [
+			"monitor"
+		]
+	}
+}

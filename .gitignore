@@ -1,0 +1,6 @@
+# Sub-repos (independently managed)
+canopy/
+mulch/
+overstory/
+seeds/
+.DS_Store

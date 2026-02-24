@@ -1,0 +1,3 @@
+project: os-eco
+version: 1
+emitDir: agents
