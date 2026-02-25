@@ -3,6 +3,17 @@
 Canonical reference for visual identity, CLI conventions, and consistency standards
 across the os-eco tooling ecosystem (mulch, seeds, canopy, overstory).
 
+Last verified: 2026-02-25.
+
+## Status
+
+| Tool | Version | Branding | CLI Standards | Remaining |
+|------|---------|----------|---------------|-----------|
+| Mulch | 0.6.2 | complete | complete | typo suggestions |
+| Seeds | 0.2.4 | complete | complete | — |
+| Canopy | 0.1.9 | complete | complete | — |
+| Overstory | 0.6.8 | complete | mostly done | `--timing`, `ov upgrade`, JSON envelope consistency |
+
 ## Quick Start
 
 ```bash
@@ -15,9 +26,9 @@ bun branding/preview.ts
 | File | What it covers |
 |------|---------------|
 | [visual-spec.md](visual-spec.md) | Color palette, logo, icons, message formats, help screen template |
-| [cli-standards.md](cli-standards.md) | Flags, JSON envelope, error handling, version, arg parsing, commander/chalk migration |
+| [cli-standards.md](cli-standards.md) | Flags, JSON envelope, error handling, version, arg parsing |
 | [documentation.md](documentation.md) | README template, badges, changelog format, npx support |
-| [roadmap.md](roadmap.md) | Future work: cli-common package, CI parity, man pages, website, wow-factor features |
+| [roadmap.md](roadmap.md) | Future work: cli-common package, CI parity, man pages, website |
 | [checklists.md](checklists.md) | Per-tool implementation checklists |
 | [preview.ts](preview.ts) | Runnable branding reference script |
 

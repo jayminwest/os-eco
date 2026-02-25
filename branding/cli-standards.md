@@ -10,25 +10,12 @@ All tools use `commander` (v14+) for arg parsing and `chalk` (v5+) for color out
 
 | Tool | commander | chalk | Status |
 |------|-----------|-------|--------|
-| Mulch | yes | yes | done |
+| Mulch | yes | yes | done (v0.6.0) |
 | Seeds | yes | yes | done (v0.2.1) |
 | Canopy | yes | yes | done (v0.1.5, register pattern) |
-| Overstory | yes (~30/31 commands) | yes | nearly done (v0.6.3) |
+| Overstory | yes | yes | done (v0.6.3) |
 
-### Seeds migration — COMPLETE
-- ~~Replace `parseArgs()` per command with commander~~ done (v0.2.1)
-- ~~Replace ANSI codes in `src/output.ts` with chalk~~ done (v0.2.1)
-- ~~Commander gives free per-command `--help`~~ done
-
-### Canopy migration — COMPLETE
-- ~~Remove dual-track parsing~~ done (commander register pattern for all 19 commands)
-- ~~Already uses chalk~~ confirmed
-
-### Overstory migration — NEARLY COMPLETE
-- ~30 of 31 command files migrated to Commander.js typed options (v0.6.3)
-- ~~Replace raw ANSI with chalk~~ done (chalk v5)
-- ~~Remove manual `NO_COLOR` / `FORCE_COLOR` checks~~ chalk handles this
-- `--quiet, -q` is a global commander option
+All four tools are fully migrated to Commander + Chalk.
 
 ---
 
@@ -44,15 +31,18 @@ Every tool must support these flags:
 | `--quiet, -q` | Suppress non-error output |
 | `--verbose` | Extra diagnostic output |
 
-### Current gaps
+### Current status
+
+All four tools support all global flags:
 
 | Flag | Mulch | Seeds | Canopy | Overstory |
 |------|-------|-------|--------|-----------|
-| `-v` short form | missing | done | done | done |
+| `-v, --version` | done | done | done | done |
 | per-command `--help` | done | done | done | done |
-| `--quiet, -q` | missing | done | missing | done |
-| `--verbose` | done | done | missing | done |
-| `--dry-run` | done | done | done | done |
+| `--quiet, -q` | done | done | done | done |
+| `--verbose` | done | done | done | done |
+| `--json` | done | done | done | done |
+| `--timing` | done | done | done | missing |
 
 ---
 
@@ -79,12 +69,12 @@ $ sd --version
 
 All tools: `export const VERSION = "<semver>"` in the entry point, kept in sync with `package.json` via `version:bump` script.
 
-| Tool | Current | Target |
-|------|---------|--------|
-| Mulch | `.version("0.6.0")` inline in `cli.ts` | `export const VERSION` in `src/cli.ts` |
-| Seeds | `export const VERSION = "0.2.2"` in `src/index.ts` | done |
-| Canopy | `export const VERSION = "0.1.5"` in `src/index.ts` | done |
-| Overstory | `const VERSION = "0.6.3"` in `src/index.ts` | add `export` |
+| Tool | Location | Status |
+|------|----------|--------|
+| Mulch | `export const VERSION` in `src/cli.ts` | done |
+| Seeds | `export const VERSION` in `src/index.ts` | done |
+| Canopy | `export const VERSION` in `src/index.ts` | done |
+| Overstory | `const VERSION` in `src/index.ts` | done |
 
 ---
 
@@ -102,7 +92,7 @@ All `--json` output uses this shape:
 | Mulch | yes | done |
 | Seeds | yes | done |
 | Canopy | yes | done |
-| Overstory | **no** (raw arrays/objects) | needs envelope |
+| Overstory | **partial** | inconsistent across commands — needs audit |
 
 ### JSON error channel
 
@@ -120,12 +110,12 @@ Rationale: machine consumers parse stdout; stderr is for human-only diagnostics.
 Use `process.exitCode = 1` everywhere. No hard `process.exit()`.
 Rationale: testable, allows cleanup/finally blocks to run.
 
-| Tool | Current | Target |
-|------|---------|--------|
-| Mulch | `process.exitCode = 1` | done |
-| Seeds | `process.exitCode = 1` | done (migrated from `process.exit(1)` in v0.2.1) |
-| Canopy | `ExitError` -> `process.exitCode` | done |
-| Overstory | `process.exit(1)` | change to `process.exitCode = 1`, keep typed errors |
+| Tool | Status |
+|------|--------|
+| Mulch | done (`process.exitCode = 1`) |
+| Seeds | done (`process.exitCode = 1`, migrated v0.2.1) |
+| Canopy | done (`ExitError` -> `process.exitCode`) |
+| Overstory | **mixed** — uses both `process.exit(1)` and `process.exitCode`, needs cleanup |
 
 ### Error codes
 
@@ -138,22 +128,12 @@ The other tools don't need this — Overstory is more complex. No need to force 
 
 Every tool has a `doctor` command with `--fix` and `--json`.
 
-| Tool | Exists | --fix | Status |
-|------|--------|-------|--------|
-| Mulch | yes (8 checks) | yes | done |
-| Seeds | yes (9 checks) | yes | done |
-| Canopy | **no** | - | needs implementation |
-| Overstory | yes (9 categories) | **no** | add `--fix` flag |
-
-### Canopy doctor checks to implement
-- config: `.canopy/config.yaml` exists and is valid
-- jsonl-integrity: `prompts.jsonl` and `schemas.jsonl` parse correctly
-- schema-validation: all prompts pass their declared schema
-- inheritance: no broken `extends` references, no circular chains
-- emit-staleness: emitted files match current prompt versions
-- stale-locks: remove lock files older than 30s
-- gitattributes: `.canopy/*.jsonl merge=union` present
-- version-sync: package.json matches `src/index.ts` VERSION
+| Tool | Exists | --fix | --json | Status |
+|------|--------|-------|--------|--------|
+| Mulch | yes (8 checks) | yes | yes | done |
+| Seeds | yes (9 checks) | yes | yes | done |
+| Canopy | yes (8 checks) | yes | yes | done (v0.1.6) |
+| Overstory | yes (9 categories) | **no** | yes | add `--fix` flag |
 
 ### Overstory ecosystem check (`ov doctor`)
 Verify sibling tools are:
@@ -179,10 +159,10 @@ sd upgrade --check      # check for updates without installing
 
 | Tool | Command | Status |
 |------|---------|--------|
-| Mulch | `mulch update` (already exists) | consider renaming to `mulch upgrade` for consistency |
-| Seeds | `sd upgrade` | done (v0.2.2, with `--check` flag) |
-| Canopy | `cn upgrade` | needs implementation |
-| Overstory | `ov upgrade` + `ov upgrade --all` | needs implementation |
+| Mulch | `mulch upgrade` | done (with `--check` and `--json`) |
+| Seeds | `sd upgrade` | done (v0.2.2, with `--check` and `--json`) |
+| Canopy | `cn upgrade` | done (v0.1.6, with `--check` and `--json`) |
+| Overstory | `ov upgrade` + `ov upgrade --all` | **missing** |
 
 ### Behavior
 - Check npm registry for latest `@os-eco/<tool>-cli`
@@ -196,13 +176,13 @@ sd upgrade --check      # check for updates without installing
 
 ## Features to Propagate
 
-| Feature | Source | Missing from |
-|---------|--------|-------------|
-| `--quiet, -q` | Overstory, Seeds | Mulch, Canopy |
-| `--verbose` | Overstory, Seeds, Mulch | Canopy |
-| `--compact` (prime) | Seeds, Canopy, Overstory | Mulch |
-| `--dry-run` (sync) | Seeds, Mulch, Canopy, Overstory | — (all done) |
-| Per-command `--help` | Commander (free) | — (all on Commander now) |
-| Typo suggestions | Overstory | Mulch, Seeds, Canopy |
-| Shell completions | Overstory | Mulch, Seeds, Canopy |
-| `--timing` / `--debug` | — | All (new: show execution time) |
+| Feature | Done | Missing from |
+|---------|------|-------------|
+| `--quiet, -q` | all 4 | — |
+| `--verbose` | all 4 | — |
+| `--dry-run` (sync) | all 4 | — |
+| Per-command `--help` | all 4 | — |
+| Shell completions | all 4 | — |
+| `--timing` | Mulch, Seeds, Canopy | Overstory |
+| Typo suggestions | Seeds, Canopy, Overstory | Mulch |
+| `upgrade` command | Mulch, Seeds, Canopy | Overstory |

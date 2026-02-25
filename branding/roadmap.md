@@ -76,19 +76,21 @@ All tools should follow:
 
 ---
 
-## --timing / --debug Flag
+## --timing Flag
 
 Show execution time on any command. Great for demonstrating Bun's fast startup.
 
 ```
 $ sd list --timing
   ... normal output ...
-  [debug] completed in 12ms
+  Done in 12ms
 ```
 
-- Only prints when `--timing` or `--debug` is passed
+- Only prints when `--timing` is passed
 - Output goes to stderr (doesn't interfere with `--json` piping)
-- Format: `[debug] completed in <N>ms` in dim text
+- Format: `Done in <N>ms` in muted text
+
+**Status:** Implemented in Mulch, Seeds, and Canopy. Still needed in Overstory.
 
 ---
 
@@ -111,19 +113,19 @@ This requires:
 
 ---
 
-## Shell Completions
+## Shell Completions — Done
 
-All four tools ship completions for bash, zsh, and fish.
+All four tools now ship completions for bash, zsh, and fish via a `completions <shell>` subcommand.
 
 ```bash
 # Generate and install
-sd --completions zsh > ~/.zfunc/_sd
-cn --completions bash > /etc/bash_completion.d/cn
+sd completions zsh > ~/.zfunc/_sd
+cn completions bash > /etc/bash_completion.d/cn
+mulch completions fish > ~/.config/fish/completions/mulch.fish
+ov --completions zsh > ~/.zfunc/_ov
 ```
 
-Overstory has the `--completions` flag. Propagate the same approach to the other three tools.
-Commander has built-in completion generation that may simplify this.
-Now that all tools use Commander, this becomes straightforward.
+**Status:** Complete across all four tools.
 
 ---
 
@@ -172,10 +174,10 @@ os-eco ecosystem status
 
 Tool          Version    Status     Health
 ─────────────────────────────────────────────
-mulch    ml   0.6.0      - latest   ✓ 8/8 checks
-seeds    sd   0.2.2      - latest   ✓ 9/9 checks
-canopy   cn   0.1.5      - latest   ✓ healthy
-overstory ov  0.6.3      - latest   ✓ 9/9 checks
+mulch    ml   0.6.2      - latest   ✓ 8/8 checks
+seeds    sd   0.2.4      - latest   ✓ 9/9 checks
+canopy   cn   0.1.9      - latest   ✓ 8/8 checks
+overstory ov  0.6.8      - latest   ✓ 9/9 checks
 
 Last sync: 2 minutes ago
 Active agents: 3  |  Open issues: 12  |  Prompts: 7

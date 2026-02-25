@@ -188,7 +188,7 @@ Run '<alias> <command> --help' for command-specific help.
 
 | Tool | Line 1 |
 |------|--------|
-| mulch | `mulch v0.6.0 — Structured expertise management` |
-| seeds | `seeds v0.2.2 — Git-native issue tracking` |
-| canopy | `canopy v0.1.5 — Prompt management & composition` |
-| overstory | `overstory v0.6.3 — Multi-agent orchestration` |
+| mulch | `mulch v0.6.2 — Structured expertise management` |
+| seeds | `seeds v0.2.4 — Git-native issue tracking` |
+| canopy | `canopy v0.1.9 — Prompt management & composition` |
+| overstory | `overstory v0.6.8 — Multi-agent orchestration` |
