@@ -30,6 +30,7 @@ Every tool must support these flags:
 | `--json` | Machine-readable JSON output |
 | `--quiet, -q` | Suppress non-error output |
 | `--verbose` | Extra diagnostic output |
+| `--timing` | Print execution time to stderr |
 
 ### Current status
 
@@ -42,7 +43,7 @@ All four tools support all global flags:
 | `--quiet, -q` | done | done | done | done |
 | `--verbose` | done | done | done | done |
 | `--json` | done | done | done | done |
-| `--timing` | done | done | done | missing |
+| `--timing` | done | done | done | done |
 
 ---
 
@@ -74,7 +75,7 @@ All tools: `export const VERSION = "<semver>"` in the entry point, kept in sync 
 | Mulch | `export const VERSION` in `src/cli.ts` | done |
 | Seeds | `export const VERSION` in `src/index.ts` | done |
 | Canopy | `export const VERSION` in `src/index.ts` | done |
-| Overstory | `const VERSION` in `src/index.ts` | done |
+| Overstory | `export const VERSION` in `src/index.ts` | done |
 
 ---
 
@@ -92,7 +93,7 @@ All `--json` output uses this shape:
 | Mulch | yes | done |
 | Seeds | yes | done |
 | Canopy | yes | done |
-| Overstory | **partial** | inconsistent across commands — needs audit |
+| Overstory | yes | done (v0.6.11, json.ts with jsonOutput/jsonError helpers) |
 
 ### JSON error channel
 
@@ -115,7 +116,7 @@ Rationale: testable, allows cleanup/finally blocks to run.
 | Mulch | done (`process.exitCode = 1`) |
 | Seeds | done (`process.exitCode = 1`, migrated v0.2.1) |
 | Canopy | done (`ExitError` -> `process.exitCode`) |
-| Overstory | **mixed** — uses both `process.exit(1)` and `process.exitCode`, needs cleanup |
+| Overstory | done (`process.exitCode = 1`; `process.exit(0)` only for SIGINT cleanup) |
 
 ### Error codes
 
@@ -133,7 +134,7 @@ Every tool has a `doctor` command with `--fix` and `--json`.
 | Mulch | yes (8 checks) | yes | yes | done |
 | Seeds | yes (9 checks) | yes | yes | done |
 | Canopy | yes (8 checks) | yes | yes | done (v0.1.6) |
-| Overstory | yes (9 categories) | **no** | yes | add `--fix` flag |
+| Overstory | yes (10 categories) | yes | yes | done (v0.6.11) |
 
 ### Overstory ecosystem check (`ov doctor`)
 Verify sibling tools are:
@@ -162,7 +163,7 @@ sd upgrade --check      # check for updates without installing
 | Mulch | `mulch upgrade` | done (with `--check` and `--json`) |
 | Seeds | `sd upgrade` | done (v0.2.2, with `--check` and `--json`) |
 | Canopy | `cn upgrade` | done (v0.1.6, with `--check` and `--json`) |
-| Overstory | `ov upgrade` + `ov upgrade --all` | **missing** |
+| Overstory | `ov upgrade` + `ov upgrade --all` | done (v0.6.11, with `--check`, `--all`, `--json`) |
 
 ### Behavior
 - Check npm registry for latest `@os-eco/<tool>-cli`
@@ -183,6 +184,6 @@ sd upgrade --check      # check for updates without installing
 | `--dry-run` (sync) | all 4 | — |
 | Per-command `--help` | all 4 | — |
 | Shell completions | all 4 | — |
-| `--timing` | Mulch, Seeds, Canopy | Overstory |
-| Typo suggestions | Seeds, Canopy, Overstory | Mulch |
-| `upgrade` command | Mulch, Seeds, Canopy | Overstory |
+| `--timing` | all 4 | — |
+| Typo suggestions | all 4 | — |
+| `upgrade` command | all 4 | — |

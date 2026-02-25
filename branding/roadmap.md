@@ -76,7 +76,7 @@ All tools should follow:
 
 ---
 
-## --timing Flag
+## --timing Flag — Done
 
 Show execution time on any command. Great for demonstrating Bun's fast startup.
 
@@ -90,7 +90,7 @@ $ sd list --timing
 - Output goes to stderr (doesn't interfere with `--json` piping)
 - Format: `Done in <N>ms` in muted text
 
-**Status:** Implemented in Mulch, Seeds, and Canopy. Still needed in Overstory.
+**Status:** Complete across all four tools.
 
 ---
 
@@ -165,9 +165,9 @@ Flags:
 
 ---
 
-## ov ecosystem Command
+## ov ecosystem Command — Done
 
-Dashboard showing the full ecosystem status:
+Dashboard showing the full ecosystem status (implemented in v0.6.11):
 
 ```
 os-eco ecosystem status
@@ -176,8 +176,8 @@ Tool          Version    Status     Health
 ─────────────────────────────────────────────
 mulch    ml   0.6.2      - latest   ✓ 8/8 checks
 seeds    sd   0.2.4      - latest   ✓ 9/9 checks
-canopy   cn   0.1.9      - latest   ✓ 8/8 checks
-overstory ov  0.6.8      - latest   ✓ 9/9 checks
+canopy   cn   0.2.0      - latest   ✓ 8/8 checks
+overstory ov  0.6.11     - latest   ✓ 10/10 checks
 
 Last sync: 2 minutes ago
 Active agents: 3  |  Open issues: 12  |  Prompts: 7

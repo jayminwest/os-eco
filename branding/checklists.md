@@ -22,7 +22,7 @@ Last verified: 2026-02-25 (scouted each sub-repo individually).
 - [x] Add `--quiet, -q` global flag — done (v0.6.0, setQuiet in palette.ts)
 - [x] Add `--verbose` global flag — done (registered globally in cli.ts, used by prime/query/status)
 - [x] Add `--compact` to `mulch prime` — done (v0.6.0, default output mode)
-- [ ] Add typo suggestions for unknown commands
+- [x] Add typo suggestions for unknown commands — done (Levenshtein in cli.ts)
 - [x] Add shell completions (`completions <shell>`) — done (bash/zsh/fish, completions.ts)
 - [x] Add `--timing` flag — done (global flag, outputs to stderr)
 - [x] JSON output helpers (`--json` flag, outputJson/outputJsonError) — done (json-output.ts)
@@ -61,7 +61,7 @@ Last verified: 2026-02-25 (scouted each sub-repo individually).
 
 ---
 
-## Canopy (v0.1.9) — Fully Complete
+## Canopy (v0.2.0) — Fully Complete
 
 ### Branding — Complete
 - [x] Apply forest palette (brand: `rgb(56, 142, 60)`, accent, muted) — done (v0.1.5)
@@ -70,7 +70,7 @@ Last verified: 2026-02-25 (scouted each sub-repo individually).
 - [x] Adopt message format standards (`✓ ✗ !`) — done (v0.1.5, fmt helpers in output.ts)
 
 ### CLI Standards — Complete
-- [x] Remove dual-track arg parsing (commander-only) — done (register pattern, all 19 commands)
+- [x] Remove dual-track arg parsing (commander-only) — done (register pattern, all 23 commands)
 - [x] Add `--version --json` (rich metadata output) — done (v0.1.6, outputs name/version/runtime/platform)
 - [x] Add `--quiet, -q` global flag — done (v0.1.6, setQuiet in output.ts)
 - [x] Add `--verbose` global flag — done (v0.1.6, used by doctor command)
@@ -84,7 +84,7 @@ Last verified: 2026-02-25 (scouted each sub-repo individually).
 
 ---
 
-## Overstory (v0.6.10) — Fully Complete
+## Overstory (v0.6.11) — Fully Complete
 
 ### Branding — Complete
 - [x] Apply forest palette (brand: `rgb(27, 94, 32)`, accent, muted) — done (v0.6.3, color.ts)
@@ -93,7 +93,7 @@ Last verified: 2026-02-25 (scouted each sub-repo individually).
 - [x] Adopt message format standards (`✓ ✗ !`) — done (v0.6.6, fmt helpers in color.ts)
 
 ### CLI Standards — Complete
-- [x] Migrate arg parsing to commander (~30 command files) — done (v0.6.3)
+- [x] Migrate arg parsing to commander (~32 command files) — done (v0.6.3)
 - [x] Replace raw ANSI with chalk — done (v0.6.2, chalk v5)
 - [x] Standardize version output (bare semver) — done (VERSION constant is bare semver)
 - [x] Add `--version --json` (rich metadata output) — done (v0.6.8, JSON envelope with name/version/runtime/platform)
@@ -101,7 +101,7 @@ Last verified: 2026-02-25 (scouted each sub-repo individually).
 - [x] Add `--verbose` global flag — done (v0.6.8, index.ts)
 - [x] Add shell completions (`completions <shell>`) — done (bash/zsh/fish, completions.ts)
 - [x] Add typo suggestions for unknown commands — done (Levenshtein in index.ts)
-- [x] Add `--timing` flag — done (v0.6.10, global flag, outputs to stderr)
+- [x] Add `--timing` flag — done (v0.6.11, global flag, outputs to stderr)
 - [x] Wrap JSON output in `{ success, command }` envelope — done (v0.6.10, json.ts with jsonOutput/jsonError helpers)
 - [x] Switch to `process.exitCode = 1` (no hard exit) — done (v0.6.10, primary pattern; process.exit(0) only for SIGINT cleanup)
 
@@ -118,8 +118,9 @@ Last verified: 2026-02-25 (scouted each sub-repo individually).
 - [x] Unify all sub-repo READMEs to template (see documentation.md) — done (all four follow canonical structure)
 - [x] Add consistent badge set to all repos (npm, CI, license) — done (all four repos have badges)
 - [x] Adopt Keep a Changelog format in all repos — done (all four have CHANGELOG.md)
-- [ ] Ensure `npx @os-eco/<tool>-cli` works for all tools
-- [ ] Update root os-eco README as ecosystem landing page
+- [x] Ensure `npx @os-eco/<tool>-cli` works for all tools — done (all four return version via npx)
+- [x] Update root os-eco README as ecosystem landing page — done (ecosystem landing page with logo, workflow example, design principles)
+- [ ] Align `.claude/commands/` across all sub-repos — audit which commands exist in each and standardize
 
 ### Infrastructure
 - [ ] Standardize CI workflows across all repos

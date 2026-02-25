@@ -9,10 +9,10 @@ Last verified: 2026-02-25.
 
 | Tool | Version | Branding | CLI Standards | Remaining |
 |------|---------|----------|---------------|-----------|
-| Mulch | 0.6.2 | complete | complete | typo suggestions |
+| Mulch | 0.6.2 | complete | complete | — |
 | Seeds | 0.2.4 | complete | complete | — |
-| Canopy | 0.1.9 | complete | complete | — |
-| Overstory | 0.6.8 | complete | mostly done | `--timing`, `ov upgrade`, JSON envelope consistency |
+| Canopy | 0.2.0 | complete | complete | — |
+| Overstory | 0.6.11 | complete | complete | — |
 
 ## Quick Start
 

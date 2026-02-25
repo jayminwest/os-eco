@@ -2,45 +2,45 @@
 
 Scout all four sub-repos to verify branding implementation, then update branding/ docs to match reality.
 
-**Argument:** `$ARGUMENTS` — optional: a single tool name to audit (e.g., `overstory`). If empty, audit all four.
+**Argument:** `$ARGUMENTS` — optional: a single tool name to audit [e.g., overstory]. If empty, audit all four.
 
 ## scout
 
-Use the Task tool to spawn **four parallel Explore agents** (or one, if a specific tool was requested). Each agent examines one sub-repo and reports ground truth.
+Use the Task tool to spawn **four parallel Explore agents** [or one, if a specific tool was requested]. Each agent examines one sub-repo and reports ground truth.
 
 ### Per-tool agent instructions
 
-For the tool at `<tool>/` (mulch, seeds, canopy, or overstory), check every item below. Report what IS implemented (with file path + line evidence) and what is NOT.
+For the tool at `<tool>/` [mulch, seeds, canopy, or overstory], check every item below. Report what IS implemented [with file path + line evidence] and what is NOT.
 
 #### Package metadata
-- `package.json`: name, version, description, bin entries, keywords
+- package.json: name, version, description, bin entries, keywords
 
 #### Branding
-- Forest palette: brand color in palette/output module (check exact RGB values)
-- Help screen: Style A with branded header (tool name in brand color + bold, version muted, tagline)
-- Status icons: Set D (`- > x !` with green/cyan/dim/yellow)
-- Message formats: `printSuccess` (brand `✓`), `printError` (red `✗`), `printWarning` (yellow `!`)
+- Forest palette: brand color in palette/output module [check exact RGB values]
+- Help screen: Style A with branded header [tool name in brand color + bold, version muted, tagline]
+- Status icons: Set D — the characters `- > x !` with green/cyan/dim/yellow
+- Message formats: printSuccess [brand checkmark], printError [red X], printWarning [yellow bang]
 
 #### CLI standards
 - Commander.js migration: all commands registered via Commander
 - Chalk v5 integration
 - `--version` / `-v` flag
-- `--version --json` with `{ name, version, runtime, platform }`
+- `--version --json` with JSON object containing name, version, runtime, platform
 - `--quiet, -q` global flag
 - `--verbose` global flag
-- `--timing` global flag (outputs elapsed time to stderr)
-- `--json` flag with `{ success, command }` envelope
-- `process.exitCode = 1` (not `process.exit(1)`)
+- `--timing` global flag [outputs elapsed time to stderr]
+- `--json` flag with success/command envelope
+- `process.exitCode = 1` [not process.exit]
 - VERSION constant exported from entry point
 
 #### Commands
-- `<tool> upgrade` command (with `--check` and `--json`)
-- `<tool> doctor` command (with `--fix` and `--json`)
-- Shell completions (`completions <shell>` for bash/zsh/fish)
-- Typo suggestions (Levenshtein "did you mean?" for unknown commands)
+- upgrade command [with --check and --json]
+- doctor command [with --fix and --json]
+- Shell completions [completions subcommand for bash/zsh/fish]
+- Typo suggestions [Levenshtein "did you mean?" for unknown commands]
 
 #### Documentation
-- README.md: badges (npm, CI, license), install instructions, command reference
+- README.md: badges [npm, CI, license], install instructions, command reference
 - CHANGELOG.md: Keep a Changelog format with semantic versioning
 
 ## compare
@@ -63,7 +63,7 @@ Edit the branding files to match reality:
 - Add any newly discovered features
 
 ### `branding/cli-standards.md`
-- Update all status tables (global flags, VERSION constant, JSON envelope, exit mechanism, doctor, upgrade, features to propagate)
+- Update all status tables [global flags, VERSION constant, JSON envelope, exit mechanism, doctor, upgrade, features to propagate]
 - Remove completed migration notes
 - Update version numbers in examples
 
@@ -71,8 +71,8 @@ Edit the branding files to match reality:
 - Update version numbers in help screen examples
 
 ### `branding/roadmap.md`
-- Mark completed items (e.g., shell completions, timing)
-- Update version numbers in `ov ecosystem` example
+- Mark completed items [e.g., shell completions, timing]
+- Update version numbers in ov ecosystem example
 - Add status notes to items that are partially done
 
 ### `branding/README.md`
