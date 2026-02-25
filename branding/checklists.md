@@ -29,6 +29,7 @@ Last verified: 2026-02-25 (scouted each sub-repo individually).
 
 ### Commands
 - [x] Add `mulch upgrade` command — done (v0.6.0, with `--check` and `--json`)
+- [x] Add `mulch doctor` command (8 checks, `--fix`, `--json`) — done
 
 ---
 
@@ -56,6 +57,7 @@ Last verified: 2026-02-25 (scouted each sub-repo individually).
 
 ### Commands — Complete
 - [x] Add `sd upgrade` command (self-update from npm) — done (v0.2.2)
+- [x] Add `sd doctor` command (9 checks, `--fix`, `--json`) — done
 
 ---
 
@@ -82,7 +84,7 @@ Last verified: 2026-02-25 (scouted each sub-repo individually).
 
 ---
 
-## Overstory (v0.6.8)
+## Overstory (v0.6.10) — Fully Complete
 
 ### Branding — Complete
 - [x] Apply forest palette (brand: `rgb(27, 94, 32)`, accent, muted) — done (v0.6.3, color.ts)
@@ -90,7 +92,7 @@ Last verified: 2026-02-25 (scouted each sub-repo individually).
 - [x] Adopt status icon set D (`- > x !`) — done (v0.6.6, migrated dashboard + all commands)
 - [x] Adopt message format standards (`✓ ✗ !`) — done (v0.6.6, fmt helpers in color.ts)
 
-### CLI Standards
+### CLI Standards — Complete
 - [x] Migrate arg parsing to commander (~30 command files) — done (v0.6.3)
 - [x] Replace raw ANSI with chalk — done (v0.6.2, chalk v5)
 - [x] Standardize version output (bare semver) — done (VERSION constant is bare semver)
@@ -99,21 +101,21 @@ Last verified: 2026-02-25 (scouted each sub-repo individually).
 - [x] Add `--verbose` global flag — done (v0.6.8, index.ts)
 - [x] Add shell completions (`completions <shell>`) — done (bash/zsh/fish, completions.ts)
 - [x] Add typo suggestions for unknown commands — done (Levenshtein in index.ts)
-- [ ] Add `--timing` flag
-- [ ] Wrap JSON output in `{ success, command }` envelope — inconsistent across commands
-- [ ] Switch to `process.exitCode = 1` (no hard exit) — mixed: uses both `process.exit(1)` and `process.exitCode`
+- [x] Add `--timing` flag — done (v0.6.10, global flag, outputs to stderr)
+- [x] Wrap JSON output in `{ success, command }` envelope — done (v0.6.10, json.ts with jsonOutput/jsonError helpers)
+- [x] Switch to `process.exitCode = 1` (no hard exit) — done (v0.6.10, primary pattern; process.exit(0) only for SIGINT cleanup)
 
-### Commands
-- [ ] Add `ov upgrade` command (self-update + `--all` for sibling tools)
-- [ ] Add ecosystem version check to `ov doctor` (check mulch/seeds/canopy)
-- [ ] Implement `ov ecosystem` dashboard command
+### Commands — Complete
+- [x] Add `ov upgrade` command (self-update + `--all` for sibling tools) — done (v0.6.10, with `--check`, `--all`, `--json`)
+- [x] Add ecosystem version check to `ov doctor` (check mulch/seeds/canopy) — done (v0.6.10, ecosystem check category)
+- [x] Implement `ov ecosystem` dashboard command — done (v0.6.10, registered via addCommand)
 
 ---
 
 ## Cross-Cutting
 
 ### Documentation
-- [ ] Unify all sub-repo READMEs to template (see documentation.md) — Seeds closest to template
+- [x] Unify all sub-repo READMEs to template (see documentation.md) — done (all four follow canonical structure)
 - [x] Add consistent badge set to all repos (npm, CI, license) — done (all four repos have badges)
 - [x] Adopt Keep a Changelog format in all repos — done (all four have CHANGELOG.md)
 - [ ] Ensure `npx @os-eco/<tool>-cli` works for all tools
