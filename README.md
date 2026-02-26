@@ -8,12 +8,9 @@
 
 An integrated ecosystem of CLI tools for AI agent workflows. Each tool handles one concern — expertise, issues, prompts, or orchestration — and they compose together so multi-agent teams can operate autonomously on real codebases.
 
-```
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  overstory   orchestration
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  canopy      prompts
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  seeds       issues
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  mulch       expertise
-```
+<p align="center">
+  <img src="branding/logo.png" alt="os-eco" width="444" />
+</p>
 
 ## Tools
 

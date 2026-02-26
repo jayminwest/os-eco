@@ -51,7 +51,7 @@ All four tools support all global flags:
 
 ```
 $ sd --version
-0.2.0
+0.2.4
 ```
 
 - Bare semver, no tool name prefix
@@ -60,7 +60,7 @@ $ sd --version
 ```json
 {
   "name": "@os-eco/seeds-cli",
-  "version": "0.2.0",
+  "version": "0.2.4",
   "runtime": "bun",
   "platform": "darwin-arm64"
 }

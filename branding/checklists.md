@@ -120,7 +120,7 @@ Last verified: 2026-02-25 (scouted each sub-repo individually).
 - [x] Adopt Keep a Changelog format in all repos — done (all four have CHANGELOG.md)
 - [x] Ensure `npx @os-eco/<tool>-cli` works for all tools — done (all four return version via npx)
 - [x] Update root os-eco README as ecosystem landing page — done (ecosystem landing page with logo, workflow example, design principles)
-- [ ] Align `.claude/commands/` across all sub-repos — audit which commands exist in each and standardize
+- [x] Align `.claude/commands/` across all sub-repos — done (all 4 sub-repos have prioritize, release, issue-reviews, pr-reviews; all managed via Canopy `cn emit`)
 
 ### Infrastructure
 - [ ] Standardize CI workflows across all repos

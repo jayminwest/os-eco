@@ -1,3 +1,8 @@
+---
+name: prioritize
+description: Prioritize open issues across GitHub and Seeds for the next swarm run
+---
+
 ## description
 
 Analyze all open issues across GitHub Issues and Seeds (both per-repo and ecosystem-level), cross-reference with codebase health, and recommend the top ~5 issues for the next swarm to tackle.

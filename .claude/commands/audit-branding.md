@@ -1,3 +1,7 @@
+---
+name: audit-branding
+---
+
 ## description
 
 Scout all four sub-repos to verify branding implementation, then update branding/ docs to match reality.
