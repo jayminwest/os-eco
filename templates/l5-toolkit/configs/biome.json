@@ -53,6 +53,10 @@
 	},
 	"overrides": [
 		{
+			"includes": ["scripts/check-all.ts", "scripts/check-ci-parity.ts"],
+			"formatter": { "enabled": false }
+		},
+		{
 			"includes": [],
 			"linter": {
 				"rules": {

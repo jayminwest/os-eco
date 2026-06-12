@@ -70,6 +70,13 @@ per-repo variation comes from `package.json` (which conditional gates exist,
 what flags gate bodies pass). Trellis and the fleet close-out verify
 byte-identity with a plain `cmp` against the template.
 
+To keep byte-identity safe from local `lint:fix` runs, every repo's
+`biome.json` carries a formatter-off override scoped to exactly
+`scripts/check-all.ts` + `scripts/check-ci-parity.ts` (the linter still
+covers them) — the canonical override ships in
+`templates/l5-toolkit/configs/biome.json`. Reformatting the frozen scripts
+is a standard rev, not a repo-local fix (tracked: os-eco root seeds).
+
 The runner exports the resolved manifest as `GATES` (the single source of
 truth that `check-ci-parity.ts` imports) and obeys this **output contract**:
 

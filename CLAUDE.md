@@ -77,18 +77,22 @@ The root `.mulch/`, `.seeds/`, and `.canopy/` directories are for **cross-repo c
 
 ## Build & Test Commands
 
-All tools use Bun. Run from the respective sub-repo:
+All tools use Bun and conform to the fleet `check:all` standard
+([docs/check-all-standard.md](docs/check-all-standard.md)): every sub-repo
+runs the same byte-identical quiet runner over one canonical gate manifest,
+with `verify` as the agent-facing alias. From the respective sub-repo:
 
 ```bash
-cd warren      && bun test && bun run lint && bun run typecheck
-cd burrow      && bun test && bun run lint && bun run typecheck
-cd plot        && bun test && bun run lint && bun run typecheck
-cd mulch       && bun test && bun run lint && bun run typecheck
-cd seeds       && bun test && bun run lint && bun run typecheck
-cd canopy      && bun test && bun run lint && bun run typecheck
-cd sapling     && bun test && bun run lint && bun run typecheck
-cd trellis     && bun test && bun run lint && bun run typecheck
+cd <repo> && bun run check:all    # full gate suite (quiet runner)
+cd <repo> && bun run verify       # alias for check:all
 ```
+
+The manifest is lint, typecheck, check:agents, check:dups, check:deps,
+check:size, check:debt, any conditional gates (warren: check:bundle-size +
+gen:docs:check + gen:openapi:check; canopy: gen:docs:check),
+check:coverage, and check:ci-parity (CI ⇄ local parity, always last). Run a
+single gate by name (`bun run lint`, `bun test`, ...). `CHECK_ALL_VERBOSE=1`
+streams full output; `--bail` stops at the first failure.
 
 ## Retired tools
 
