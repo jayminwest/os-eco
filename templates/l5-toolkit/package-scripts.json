@@ -1,5 +1,5 @@
 {
-	"$comment": "Canonical scripts to merge into each sub-repo's package.json. Drop-in keys: check:size, check:debt, check:dups, check:deps, check:agents, check:coverage, check:all (aggregator), test:ci, prepare. Sub-repo may extend (e.g. check:bundle-size in burrow) without dropping any of these. The toolkit's README.md (§8 'package.json wiring') documents merge order and adaptation points.",
+	"$comment": "Canonical scripts to merge into each sub-repo's package.json. Drop-in keys: check:size, check:debt, check:dups, check:deps, check:agents, check:coverage, check:ci-parity, check:all (quiet runner), verify, test:ci, prepare. Conditional gates (check:bundle-size, gen:docs:check, gen:openapi:check) are picked up by the runner automatically when defined. See docs/check-all-standard.md at the os-eco root and the toolkit README §(d) Step 8 'package.json wiring'.",
 	"scripts": {
 		"check:size": "bun run scripts/check-file-sizes.ts",
 		"check:debt": "bun run scripts/check-debt-markers.ts",
@@ -7,19 +7,24 @@
 		"check:deps": "knip --dependencies",
 		"check:agents": "bun run scripts/validate-agents-md.ts",
 		"check:coverage": "bun run scripts/check-coverage.ts",
-		"check:all": "bun run check:size && bun run check:debt && bun run check:dups && bun run check:deps && bun run check:agents && bun run check:coverage",
+		"check:ci-parity": "bun scripts/check-ci-parity.ts",
+		"check:all": "bun scripts/check-all.ts",
+		"verify": "bun run check:all",
 		"test:ci": "mkdir -p test-results && bun test --coverage --coverage-reporter=lcov --coverage-dir=coverage --reporter=junit --reporter-outfile=test-results/junit.xml",
 		"prepare": "[ -e .git ] && git config core.hooksPath scripts/hooks || true"
 	},
 	"devDependencies": {
-		"knip": "^6.14.2"
+		"knip": "^6.14.2",
+		"yaml": "^2.6.0"
 	},
 	"notes": {
-		"check:all": "Chains the individual check:* commands in a fail-fast sequence. Sub-repos that also produce a bundle (burrow) append `&& bun run check:bundle-size:build` at the end after porting check-bundle-size.ts.",
+		"check:all": "The byte-identical quiet runner (scripts/check-all.ts) — one aligned line per gate, signatures-only on failure, CHECK_ALL_VERBOSE=1 / --bail escape hatches. It resolves the gate manifest from package.json and exports it as GATES; never replace it with an && chain.",
+		"verify": "Agent-facing alias for check:all. Mandatory in every conforming repo.",
+		"check:ci-parity": "Final gate in the manifest. Imports GATES from check-all.ts and fails on any CI `bun run <x>` not reachable from it. Per-repo aliases/ciOnly go in scripts/ci-parity-config.json.",
 		"check:dups": "Runs jscpd via bunx; no devDep needed. Config lives in .jscpd.json at the sub-repo root (copied from templates/l5-toolkit/configs/.jscpd.json).",
-		"check:coverage": "Wraps `bun test --coverage` and enforces the floors in scripts/coverage-budgets.json. Lives outside the check:all aggregator only because some sub-repos prefer running coverage as a separate CI job for caching reasons — keep it inside if your CI is monolithic.",
-		"test:ci": "Emits both coverage/lcov.info and test-results/junit.xml so report-test-timing.ts and report-quality-metrics.ts can render their CI step-summary panels.",
+		"check:coverage": "Wraps `bun test --coverage` and enforces the floors in scripts/coverage-budgets.json. Runs second-to-last in the manifest (most expensive gate before the parity meta-gate).",
+		"test:ci": "Emits both coverage/lcov.info and test-results/junit.xml so report-test-timing.ts and report-quality-metrics.ts can render their CI step-summary panels. Alias it to check:coverage in scripts/ci-parity-config.json.",
 		"prepare": "Idempotent: skips on a non-git checkout (e.g. inside a Docker build context). After install, runs `git config core.hooksPath scripts/hooks`, which makes scripts/hooks/pre-commit fire on `git commit`.",
-		"devDependencies": "knip is required for check:deps. jscpd runs through `bunx` (no install). Sub-repos that need a structured logger (plot, mulch, seeds) additionally add pino + pino-pretty per AGENTS.md."
+		"devDependencies": "knip is required for check:deps; yaml is required by check-ci-parity.ts. jscpd runs through `bunx` (no install). Sub-repos that need a structured logger (plot, mulch, seeds) additionally add pino + pino-pretty per AGENTS.md."
 	}
 }

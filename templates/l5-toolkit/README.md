@@ -282,9 +282,19 @@ Copy from `templates/l5-toolkit/scripts/`:
 - [ ] `check-coverage.ts`
 - [ ] `check-bundle-size.ts` (only if the repo bundles via `bun build`)
 - [ ] `validate-agents-md.ts`
+- [ ] `check-all.ts` — the canonical quiet runner (**byte-identical**, never
+      edited; see `docs/check-all-standard.md` at the os-eco root). Resolves
+      its gate manifest from the host repo's `package.json` and exports it
+      as `GATES`.
+- [ ] `check-ci-parity.ts` — CI ⇄ check:all drift detector (**byte-identical**;
+      imports `GATES` from `check-all.ts`). Per-repo escape hatches go in an
+      optional `scripts/ci-parity-config.json` (`aliases` + `ciOnly`), not in
+      the script.
 - [ ] `report-test-timing.ts`
 - [ ] `report-quality-metrics.ts`
 - [ ] `hooks/pre-commit` (make executable: `chmod +x scripts/hooks/pre-commit`)
+
+Each script's co-located `*.test.ts` comes along with it.
 
 **Adaptations:**
 - `check-debt-markers.ts`: edit the tracker-prefix list to match the
@@ -367,14 +377,20 @@ key set):
 
 - [ ] `check:size`, `check:debt`, `check:dups`, `check:deps`, `check:agents`
 - [ ] `check:coverage`
-- [ ] `check:all` aggregator that chains the above
+- [ ] `check:all` = `bun scripts/check-all.ts` (the quiet runner — never an
+      `&&` chain)
+- [ ] `verify` = `bun run check:all` (the agent-facing alias; mandatory)
+- [ ] `check:ci-parity` = `bun scripts/check-ci-parity.ts` (the manifest's
+      final gate)
 - [ ] `test:ci` (emits `junit.xml` + coverage)
 - [ ] `prepare` (sets `core.hooksPath=scripts/hooks`; idempotent on
       non-git checkouts via `[ -e .git ] && ... || true`)
-- [ ] Add `knip` to `devDependencies`. (`jscpd` runs via `bunx`; no install.)
+- [ ] Add `knip` and `yaml` (ci-parity's workflow parser) to
+      `devDependencies`. (`jscpd` runs via `bunx`; no install.)
 - [ ] For plot/mulch/seeds: add `pino` + `pino-pretty` to `devDependencies`.
-- [ ] For burrow (bundled): append `&& bun run check:bundle-size:build`
-      to the `check:all` chain after porting `check-bundle-size.ts`.
+- [ ] Conditional gates (`check:bundle-size`, `gen:docs:check`,
+      `gen:openapi:check`) need no manifest edit — the runner includes them
+      automatically when the script key exists in `package.json`.
 
 ### Step 9 — Verify
 
