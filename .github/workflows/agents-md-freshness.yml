@@ -23,7 +23,7 @@ jobs:
     name: Governance files present
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
 
       - name: Verify governance scaffolding (mirrors os-eco-3ce3 seal block)
         run: |
@@ -75,7 +75,7 @@ jobs:
     name: AGENTS.md / CLAUDE.md references resolve
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
 
       - name: Verify every scripts/ path mentioned in agent docs exists
         run: |
