@@ -1,6 +1,6 @@
 # The os-eco `check:all` Standard
 
-**Status:** frozen (rev 1, 2026-06-12) · **Tracker:** os-eco-3ee9 / pl-760e ·
+**Status:** frozen (rev 2, 2026-07-27) · **Tracker:** os-eco-3ee9 / pl-760e ·
 **Runner:** [`templates/l5-toolkit/scripts/check-all.ts`](../templates/l5-toolkit/scripts/check-all.ts)
 
 Every os-eco sub-repo exposes the same quality-gate surface: one canonical
@@ -100,9 +100,17 @@ may diverge from the other.
 
 `check:ci-parity` (byte-identical `scripts/check-ci-parity.ts`, ported from
 warren's original) imports `GATES` from `check-all.ts`, parses every
-`.github/workflows/ci*.yml`, and fails when any `bun run <X>` in a CI `run:`
-step is not transitively reachable from the manifest. Release/publish
-workflows (`release.yml` etc.) are intentionally out of scope.
+`.github/workflows/ci*.yml`, and asserts parity in **both** directions
+(rev 2, warren-da69):
+
+- **CI → local:** any `bun run <X>` in a CI `run:` step must be transitively
+  reachable from the manifest — CI never enforces something `check:all`
+  does not exercise.
+- **local → CI:** every gate in the manifest must be transitively invoked by
+  some CI step — a gate can never silently vanish from (or never reach) CI.
+
+Release/publish workflows (`release.yml` etc.) are intentionally out of
+scope.
 
 Per-repo escape hatches live in an optional
 `scripts/ci-parity-config.json` (the scripts themselves stay byte-identical):
@@ -111,14 +119,22 @@ Per-repo escape hatches live in an optional
 {
   "$comment": "justify every entry",
   "aliases": { "check:coverage:ci": "check:coverage" },
-  "ciOnly": ["report:test-timing", "report:quality-metrics"]
+  "ciOnly": ["report:test-timing", "report:quality-metrics"],
+  "localOnly": []
 }
 ```
 
 - `aliases` — CI-side name → canonical gate-reachable equivalent, for
   variants that run the same gate with a different reporter/preamble.
+  Applies in both directions.
 - `ciOnly` — explicit allowlist for intentionally CI-only steps (summaries,
-  environment setup). This is the only sanctioned divergence.
+  environment setup).
+- `localOnly` — its inverse: explicit allowlist for manifest gates
+  deliberately not run in CI (too slow, or needing tooling CI does not
+  have). Prefer an empty list; a gate parked here is a gate CI is not
+  enforcing.
+
+Those three lists are the only sanctioned divergence.
 
 ## 7. Per-repo reconciliation (pre-standard → canonical)
 
@@ -141,6 +157,6 @@ Per-repo escape hatches live in an optional
    `bun run check:all`, `check:ci-parity` = `bun scripts/check-ci-parity.ts`,
    and only canonical gate names.
 3. `bun run check:all` is green with the quiet-output contract.
-4. CI workflows invoke only manifest-reachable scripts (or justified
-   `ci-parity-config.json` entries).
+4. CI workflows invoke only manifest-reachable scripts, and invoke every
+   manifest gate (or carry justified `ci-parity-config.json` entries).
 5. The `yaml` package is a devDependency (ci-parity's workflow parser).
