@@ -5,6 +5,7 @@ greenhouse/
 mulch/
 overstory/
 plot/
+roots/
 sapling/
 seeds/
 trellis/
@@ -12,6 +13,10 @@ warren/
 
 # Local logs / scratch
 .run-plan-logs/
+
+# pi planning harness — local session/auth state (config in .pi/ is tracked)
+.pi/agent/
+.pi/sessions/
 
 # Secrets / env
 .env
@@ -33,4 +38,4 @@ test-results/
 *.log
 
 # Private agentic-readiness rubric
-notes/PRIVATE-rubric/
+notes/PRIVATE-rubric/warren-site/
