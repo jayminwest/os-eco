@@ -84,8 +84,21 @@ truth that `check-ci-parity.ts` imports) and obeys this **output contract**:
 - **Success:** a one-line tally — `12/12 gates passed (34.2s)`.
 - **Failure:** the failing gate names plus *parsed failure signatures* from
   the captured output (bun-test `(fail)` lines, tsc/biome error lines,
-  budget-ratchet violations — tail of output as fallback), never the full
-  log, followed by a `re-run: bun run <gate>` hint.
+  budget-ratchet violations, `check-coverage` below-floor messages — tail
+  of output as fallback), never the full log, followed by the path of the
+  gate's retained full log and a `re-run: bun run <gate>` hint. Passing,
+  skipped, and todo test lines never count as signatures (a test *named*
+  after a budget failure is not one), and neither does the generic
+  `error: script "<gate>" exited with code N` trailer.
+- **Log retention:** every captured gate's full stdout+stderr is written to
+  `<log dir>/<gate>.log` (`check:coverage` → `check-coverage.log`), with
+  each gate's exit code, timing, and log path in `<log dir>/summary.json`.
+  The log dir is `$CHECK_ALL_LOG_DIR` when set, otherwise
+  `<os tmpdir>/check-all/<repo basename>-<8-hex hash of the repo path>`,
+  stable per checkout. Each run clears it first, so it holds only the
+  latest run. A log write failure prints a warning and never changes a
+  gate result. Search the saved log rather than re-running a gate to see
+  more output.
 - **`CHECK_ALL_VERBOSE=1`** streams every gate's full output instead of
   capturing.
 - **`--bail`** stops at the first failing gate.
